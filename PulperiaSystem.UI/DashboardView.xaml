@@ -1,0 +1,103 @@
+<UserControl x:Class="PulperiaSystem.UI.DashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="900" Background="#F4F6F6">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/> <!-- Header -->
+            <RowDefinition Height="Auto"/> <!-- Tarjetas KPI -->
+            <RowDefinition Height="*"/>    <!-- Alertas Lista -->
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,20">
+            <TextBlock Text="📊 Resumen del Negocio" FontSize="24" FontWeight="Bold" Foreground="#2C3E50" VerticalAlignment="Center"/>
+            <Button Content="🔄 Actualizar" Margin="20,0,0,0" Padding="10,5" Click="BtnRefrescar_Click" Background="White" BorderBrush="#BDC3C7"/>
+        </StackPanel>
+
+        <!-- Tarjetas KPI -->
+        <Grid Grid.Row="1" Margin="0,0,0,30">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Card 1: Ventas Hoy -->
+            <Border Grid.Column="0" Background="White" CornerRadius="10" Padding="20">
+                <Border.Effect>
+                    <DropShadowEffect Color="#DDDDDD" BlurRadius="10" ShadowDepth="3"/>
+                </Border.Effect>
+                <StackPanel>
+                    <TextBlock Text="Ventas de Hoy" Foreground="#7F8C8D" FontSize="14" FontWeight="SemiBold"/>
+                    <TextBlock x:Name="lblVentasHoy" Text="$0.00" Foreground="#27AE60" FontSize="32" FontWeight="Bold" Margin="0,10,0,0"/>
+                    <TextBlock Text="Total facturado" Foreground="#BDC3C7" FontSize="12"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Card 2: Tickets -->
+            <Border Grid.Column="2" Background="White" CornerRadius="10" Padding="20">
+                <Border.Effect>
+                    <DropShadowEffect Color="#DDDDDD" BlurRadius="10" ShadowDepth="3"/>
+                </Border.Effect>
+                <StackPanel>
+                    <TextBlock Text="Transacciones" Foreground="#7F8C8D" FontSize="14" FontWeight="SemiBold"/>
+                    <TextBlock x:Name="lblTransacciones" Text="0" Foreground="#2980B9" FontSize="32" FontWeight="Bold" Margin="0,10,0,0"/>
+                    <TextBlock Text="Tickets emitidos" Foreground="#BDC3C7" FontSize="12"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Card 3: Alertas Stock -->
+            <Border Grid.Column="4" Background="White" CornerRadius="10" Padding="20">
+                <Border.Effect>
+                    <DropShadowEffect Color="#DDDDDD" BlurRadius="10" ShadowDepth="3"/>
+                </Border.Effect>
+                <StackPanel>
+                    <TextBlock Text="Stock Bajo" Foreground="#7F8C8D" FontSize="14" FontWeight="SemiBold"/>
+                    <TextBlock x:Name="lblCountBajoStock" Text="0" Foreground="#E74C3C" FontSize="32" FontWeight="Bold" Margin="0,10,0,0"/>
+                    <TextBlock Text="Productos en alerta" Foreground="#BDC3C7" FontSize="12"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <!-- Sección Inferior: Detalles Alerta Stock -->
+        <Border Grid.Row="2" Background="White" CornerRadius="10" Padding="20">
+            <Border.Effect>
+                <DropShadowEffect Color="#DDDDDD" BlurRadius="10" ShadowDepth="3"/>
+            </Border.Effect>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                
+                <TextBlock Text="⚠️ Productos Requeridos (Bajo Stock)" FontSize="16" FontWeight="Bold" Foreground="#E74C3C" Margin="0,0,0,10"/>
+                
+                <DataGrid x:Name="gridBajoStock" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True"
+                          HeadersVisibility="Column" GridLinesVisibility="Horizontal" Background="White" BorderThickness="0">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Código" Binding="{Binding Codigo}" Width="100"/>
+                        <DataGridTextColumn Header="Producto" Binding="{Binding Nombre}" Width="*"/>
+                        <DataGridTextColumn Header="Stock Actual" Binding="{Binding StockActual}" Width="100" FontWeight="Bold"/>
+                        <DataGridTextColumn Header="Mínimo Req." Binding="{Binding StockMinimo}" Width="100"/>
+                    </DataGrid.Columns>
+                    <DataGrid.RowStyle>
+                         <Style TargetType="DataGridRow">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding StockActual}" Value="0">
+                                    <Setter Property="Background" Value="#FFEEEE"/> <!-- Rojo clarito para stock 0 -->
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </DataGrid.RowStyle>
+                </DataGrid>
+            </Grid>
+        </Border>
+    </Grid>
+</UserControl>

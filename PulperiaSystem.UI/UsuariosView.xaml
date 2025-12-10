@@ -1,0 +1,54 @@
+<UserControl x:Class="PulperiaSystem.UI.UsuariosView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="900" Background="#F4F6F6">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/> <!-- Header -->
+            <RowDefinition Height="*"/>    <!-- Lista -->
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Grid Grid.Row="0" Margin="0,0,0,20">
+            <TextBlock Text="👥 Gestión de Usuarios (Cajeros)" FontSize="24" FontWeight="Bold" Foreground="#2C3E50" VerticalAlignment="Center"/>
+            <Button Content="+ Nuevo Usuario" HorizontalAlignment="Right"
+                    Background="#27AE60" Foreground="White" BorderThickness="0" Padding="15,8"
+                    FontWeight="Bold" Cursor="Hand" Click="BtnNuevo_Click">
+                 <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="5" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </Grid>
+
+        <!-- Lista de Usuarios -->
+        <DataGrid x:Name="gridUsuarios" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True"
+                  HeadersVisibility="Column" GridLinesVisibility="Horizontal" 
+                  Background="White" BorderThickness="0" RowHeight="40">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding UsuarioId}" Width="50"/>
+                <DataGridTextColumn Header="Usuario" Binding="{Binding NombreUsuario}" Width="*"/>
+                <DataGridTextColumn Header="Rol ID" Binding="{Binding RolId}" Width="80"/>
+                <DataGridCheckBoxColumn Header="Activo" Binding="{Binding Estado}" Width="60"/>
+                
+                <DataGridTemplateColumn Header="Acciones" Width="150">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                <Button Content="Editar" Width="60" Background="#3498DB" Foreground="White" Margin="0,0,5,0" Click="BtnEditar_Click"/>
+                                <Button Content="Estado" Width="60" Background="#E67E22" Foreground="White" Click="BtnCambiarEstado_Click"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

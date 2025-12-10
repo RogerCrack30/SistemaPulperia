@@ -1,0 +1,62 @@
+<UserControl x:Class="PulperiaSystem.UI.PersonasView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="900" Background="White">
+    
+    <Grid>
+        <TabControl Margin="10">
+            <!-- TAB 1: CLIENTES -->
+            <TabItem Header=" Clientes " FontSize="16">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                        <Button Content="➕ Nuevo Cliente" Width="140" Height="35" Background="#27AE60" Foreground="White" Click="BtnNuevoCliente_Click"/>
+                        <Button Content="✏️ Editar" Width="100" Height="35" Background="#F39C12" Foreground="White" Margin="10,0" Click="BtnEditarCliente_Click"/>
+                        <Button Content="🗑️ Eliminar" Width="100" Height="35" Background="#E74C3C" Foreground="White" Click="BtnEliminarCliente_Click"/>
+                    </StackPanel>
+
+                    <DataGrid x:Name="gridClientes" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="Column" GridLinesVisibility="Horizontal">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding ClienteId}" Width="50"/>
+                            <DataGridTextColumn Header="Nombre" Binding="{Binding Nombre}" Width="200"/>
+                            <DataGridTextColumn Header="Teléfono" Binding="{Binding Telefono}" Width="120"/>
+                            <DataGridTextColumn Header="Dirección" Binding="{Binding Direccion}" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+
+            <!-- TAB 2: PROVEEDORES -->
+            <TabItem Header=" Proveedores " FontSize="16">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                        <Button Content="➕ Nuevo Proveedor" Width="150" Height="35" Background="#2980B9" Foreground="White" Click="BtnNuevoProv_Click"/>
+                        <Button Content="✏️ Editar" Width="100" Height="35" Background="#F39C12" Foreground="White" Margin="10,0" Click="BtnEditarProv_Click"/>
+                        <Button Content="🗑️ Eliminar" Width="100" Height="35" Background="#E74C3C" Foreground="White" Click="BtnEliminarProv_Click"/>
+                    </StackPanel>
+
+                    <DataGrid x:Name="gridProveedores" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" HeadersVisibility="Column" GridLinesVisibility="Horizontal">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding ProveedorId}" Width="50"/>
+                            <DataGridTextColumn Header="Nombre" Binding="{Binding Nombre}" Width="200"/>
+                            <DataGridTextColumn Header="Teléfono" Binding="{Binding Telefono}" Width="120"/>
+                            <DataGridTextColumn Header="Dirección" Binding="{Binding Direccion}" Width="*"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>

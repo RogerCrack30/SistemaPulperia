@@ -1,0 +1,53 @@
+@page "/dashboard/{UsuarioId:int}"
+@using PulperiaSystem.DataAccess
+@using PulperiaSystem.Models
+
+<div class="container mt-4">
+    <h3>📱 Panel Móvil</h3>
+    <p class="text-muted">Bienvenido al sistema remoto.</p>
+
+    <div class="row">
+        <!-- Venta Rápida -->
+        <div class="col-12 mb-3">
+            <div class="card bg-primary text-white shadow">
+                <div class="card-body d-flex align-items-center justify-content-between">
+                    <div>
+                        <h5>Nueva Venta</h5>
+                        <small>Escanear productos</small>
+                    </div>
+                    <span style="font-size: 2rem;">🛒</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Inventario -->
+        <div class="col-6 mb-3">
+            <div class="card bg-success text-white shadow h-100">
+                <div class="card-body text-center">
+                    <h5>Inventario</h5>
+                    <span>📋</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reportes -->
+        <div class="col-6 mb-3">
+            <div class="card bg-warning text-dark shadow h-100">
+                <div class="card-body text-center">
+                    <h5>Reportes</h5>
+                    <span>📊</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="alert alert-info mt-3">
+        ℹ️ <strong>Tip:</strong> Usa la cámara de tu celular para escanear códigos de barra en el módulo de Venta.
+    </div>
+
+    <a href="/login" class="btn btn-outline-danger w-100 mt-4">Cerrar Sesión</a>
+</div>
+
+@code {
+    [Parameter] public int UsuarioId { get; set; }
+}

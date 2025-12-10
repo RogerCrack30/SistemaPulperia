@@ -1,0 +1,24 @@
+<Window x:Class="PulperiaSystem.UI.AdminAuthWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Autorización Requerida" Height="250" Width="380"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Background="#2C3E50">
+
+    <StackPanel Margin="20">
+        <TextBlock Text="🔒 AUTORIZACIÓN DE SUPERVISOR" 
+                   Foreground="White" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,5"/>
+        <TextBlock Text="Se requiere un Administrador para realizar esta acción." 
+                   Foreground="#BDC3C7" FontSize="11" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+        <TextBlock Text="Usuario (Admin)" Foreground="White" Margin="0,0,0,5"/>
+        <TextBox x:Name="txtUser" Height="30" Margin="0,0,0,10"/>
+
+        <TextBlock Text="Contraseña" Foreground="White" Margin="0,0,0,5"/>
+        <PasswordBox x:Name="txtPass" Height="30" Margin="0,0,0,20" KeyDown="txtPass_KeyDown"/>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Cancelar" Width="80" Height="30" Click="BtnCancelar_Click" Margin="0,0,10,0"/>
+            <Button Content="AUTORIZAR" Width="100" Height="30" Background="#E74C3C" Foreground="White" FontWeight="Bold" Click="BtnAutorizar_Click"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

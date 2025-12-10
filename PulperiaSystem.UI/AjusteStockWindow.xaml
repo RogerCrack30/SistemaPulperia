@@ -1,0 +1,30 @@
+<Window x:Class="PulperiaSystem.UI.AjusteStockWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Ajuste Rápido de Stock" Height="250" Width="350"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
+        Background="#F5F5F5">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="txtProducto" Text="Producto: ---" FontSize="16" FontWeight="Bold" Foreground="#333" Margin="0,0,0,5"/>
+        <TextBlock x:Name="txtStockActual" Grid.Row="1" Text="Stock Actual: 0" FontSize="14" Foreground="#666" Margin="0,0,0,20"/>
+
+        <StackPanel Grid.Row="2">
+            <TextBlock Text="Cantidad a Ajustar:" FontWeight="SemiBold"/>
+            <TextBlock Text="(Use positivo para agregar, negativo para quitar)" FontSize="10" Foreground="Gray" Margin="0,0,0,5"/>
+            <TextBox x:Name="txtCantidad" Height="35" FontSize="16" VerticalContentAlignment="Center" Padding="5"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,20,0,0">
+            <Button Content="Cancelar" Width="100" Height="35" Background="#95A5A6" Foreground="White" BorderThickness="0" Click="BtnCancelar_Click" Margin="0,0,10,0"/>
+            <Button Content="APLICAR" Width="100" Height="35" Background="#27AE60" Foreground="White" BorderThickness="0" Click="BtnAplicar_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,28 @@
+<Window x:Class="PulperiaSystem.UI.UsuarioForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Gestión de Usuario" Height="400" Width="350"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Background="#ECF0F1">
+
+    <StackPanel Margin="20">
+        <TextBlock Text="Datos del Usuario" FontSize="18" FontWeight="Bold" Margin="0,0,0,20"/>
+
+        <TextBlock Text="Nombre de Usuario *"/>
+        <TextBox x:Name="txtUsuario" Height="30" Margin="0,0,0,15" Padding="5"/>
+
+        <TextBlock Text="Contraseña"/>
+        <PasswordBox x:Name="txtPassword" Height="30" Margin="0,0,0,5" Padding="5"/>
+        <TextBlock Text="(Dejar en blanco para no cambiar al editar)" FontSize="10" Foreground="Gray" Margin="0,0,0,15"/>
+
+        <TextBlock Text="Rol *"/>
+        <ComboBox x:Name="cmbRol" Height="30" Margin="0,0,0,20">
+            <ComboBoxItem Content="Administrador (1)" Tag="1"/>
+            <ComboBoxItem Content="Cajero (2)" Tag="2" IsSelected="True"/>
+        </ComboBox>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Cancelar" Width="80" Height="30" Margin="0,0,10,0" Click="BtnCancelar_Click"/>
+            <Button Content="GUARDAR" Width="80" Height="30" Background="#27AE60" Foreground="White" FontWeight="Bold" Click="BtnGuardar_Click"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

@@ -1,0 +1,30 @@
+@page "/"
+@layout EmptyLayout
+
+<div class="container" style="max-width: 400px; margin-top: 50px;">
+    <div class="card shadow">
+        <div class="card-body text-center">
+            <h3 class="mb-3">📱 Pulpería Móvil</h3>
+            <p class="text-muted">Acceso Remoto</p>
+
+            @if (!string.IsNullOrEmpty(ErrorMessage))
+            {
+                <div class="alert alert-danger">@ErrorMessage</div>
+            }
+
+            <div class="mb-3 text-start">
+                <label class="form-label">Usuario</label>
+                <input type="text" class="form-control" @bind="Username" placeholder="Ej. Admin" />
+            </div>
+
+            <div class="mb-3 text-start">
+                <label class="form-label">Contraseña</label>
+                <input type="password" class="form-control" @bind="Password" placeholder="******" />
+            </div>
+
+            <button class="btn btn-primary w-100" @onclick="HandleLogin">
+                Ingresar
+            </button>
+        </div>
+    </div>
+</div>

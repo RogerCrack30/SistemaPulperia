@@ -1,0 +1,58 @@
+<UserControl x:Class="PulperiaSystem.UI.InventarioView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="900" Background="White">
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Control de Existencias" FontSize="22" FontWeight="Bold" Foreground="#333" Margin="0,0,0,10"/>
+        <TextBlock Text="Monitoreo de niveles de stock y ajustes rápidos." FontSize="14" Foreground="#777" Margin="0,0,0,20" Grid.Row="1"/>
+
+        <!-- ToolBar -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,10">
+            <Button Content="⚡ Ajuste Rápido" Width="150" Height="35" Background="#8E44AD" Foreground="White" 
+                    FontSize="14" FontWeight="Bold" Click="BtnAjuste_Click">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="5" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            
+            <Button Content="↻ Refrescar" Width="100" Height="35" Background="#3498DB" Foreground="White" 
+                    FontSize="14" FontWeight="Bold" Margin="10,0,0,0" Click="BtnRefrescar_Click">
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border CornerRadius="5" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </StackPanel>
+
+        <!-- Grid -->
+        <DataGrid x:Name="gridStock" Grid.Row="2" AutoGenerateColumns="False" IsReadOnly="True" 
+                  HeadersVisibility="Column" GridLinesVisibility="Horizontal"
+                  Background="White" BorderBrush="#EEEEEE" RowHeight="35">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Código" Binding="{Binding Codigo}" Width="100"/>
+                <DataGridTextColumn Header="Nombre" Binding="{Binding Nombre}" Width="*"/>
+                <DataGridTextColumn Header="Stock Actual" Binding="{Binding StockActual}" Width="100"/>
+                <DataGridTextColumn Header="Mínimo" Binding="{Binding StockMinimo}" Width="100"/>
+                <DataGridTextColumn Header="Unidad" Binding="{Binding UnidadMedida}" Width="80"/>
+                <DataGridCheckBoxColumn Header="Activo" Binding="{Binding Estado}" Width="60"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>
