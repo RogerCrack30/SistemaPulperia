@@ -24,4 +24,12 @@ app.UseAntiforgery();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
+
+// Inicializar la cadena de conexión estática para los Repositorios Legacy
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+if (!string.IsNullOrEmpty(connectionString))
+{
+    PulperiaSystem.DataAccess.SqlHelper.ConnectionString = connectionString;
+}
+
 app.Run();
