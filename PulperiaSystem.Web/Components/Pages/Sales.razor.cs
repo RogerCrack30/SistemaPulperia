@@ -7,7 +7,7 @@ namespace PulperiaSystem.Web.Components.Pages
 {
     public partial class Sales : ComponentBase
     {
-        [Inject] NavigationManager Nav { get; set; }
+        [Inject] NavigationManager Nav { get; set; } = default!;
         [Parameter] public int UsuarioId { get; set; }
 
         // Repositories
@@ -18,8 +18,8 @@ namespace PulperiaSystem.Web.Components.Pages
         protected List<Producto> AllProducts { get; set; } = new();
         protected List<ItemCarritoWeb> Carrito { get; set; } = new();
         protected string SearchTerm { get; set; } = "";
-        protected string ErrorMessage { get; set; }
-        protected string SuccessMessage { get; set; }
+        protected string ErrorMessage { get; set; } = "";
+        protected string SuccessMessage { get; set; } = "";
         protected bool IsLoading { get; set; } = false;
 
         // Computed

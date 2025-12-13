@@ -6,7 +6,7 @@ namespace PulperiaSystem.Web.Components.Pages
 {
     public partial class ProductForm : ComponentBase
     {
-        [Inject] NavigationManager Nav { get; set; }
+        [Inject] NavigationManager Nav { get; set; } = default!;
         
         [Parameter] public int UsuarioId { get; set; }
         [Parameter] public int? Id { get; set; } // Null for New, Int for Edit
@@ -16,7 +16,7 @@ namespace PulperiaSystem.Web.Components.Pages
 
         protected Producto Model { get; set; } = new Producto();
         protected List<Categoria> Categorias { get; set; } = new();
-        protected string ErrorMessage { get; set; }
+        protected string ErrorMessage { get; set; } = "";
         protected bool IsLoading { get; set; } = false;
 
         protected string Title => Id.HasValue ? "Editar Producto" : "Nuevo Producto";

@@ -85,8 +85,8 @@
                             {
                                 <tr>
                                     <td>@venta.Fecha.ToString("HH:mm")</td>
-                                    <td>@venta.FormaPago</td>
-                                    <td class="text-end fw-bold">@venta.Total.ToString("C2")</td>
+                                    <td>@venta.Producto (@venta.Cantidad)</td>
+                                    <td class="text-end fw-bold">@venta.Subtotal.ToString("C2")</td>
                                 </tr>
                             }
                         }

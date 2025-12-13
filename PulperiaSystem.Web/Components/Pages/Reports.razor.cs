@@ -12,11 +12,11 @@ namespace PulperiaSystem.Web.Components.Pages
         
         protected DateTime FechaInicio { get; set; } = DateTime.Today;
         protected DateTime FechaFin { get; set; } = DateTime.Today;
-        protected List<Venta> ReporteVentas { get; set; } = new();
+        protected List<ReporteVentaItem> ReporteVentas { get; set; } = new();
         protected decimal TotalVentas { get; set; }
         protected int CantidadTransacciones { get; set; }
         protected bool IsLoading { get; set; } = false;
-        protected string ErrorMessage { get; set; }
+        protected string ErrorMessage { get; set; } = ""; // Fix CS8618
 
         protected override async Task OnInitializedAsync()
         {
@@ -34,10 +34,10 @@ namespace PulperiaSystem.Web.Components.Pages
 
                 ReporteVentas = await Task.Run(() => 
                     _ventaRepo.ObtenerReporte(FechaInicio, finAjustado, null)
-                ) ?? new List<Venta>();
+                ) ?? new List<ReporteVentaItem>();
 
-                TotalVentas = ReporteVentas.Sum(v => v.Total);
-                CantidadTransacciones = ReporteVentas.Count;
+                TotalVentas = ReporteVentas.Sum(v => v.Subtotal);
+                CantidadTransacciones = ReporteVentas.Select(v => v.VentaId).Distinct().Count();
             }
             catch (Exception ex)
             {
