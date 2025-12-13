@@ -1,0 +1,123 @@
+@page "/sales/{UsuarioId:int}"
+@rendermode InteractiveServer
+
+<PageTitle>Nueva Venta</PageTitle>
+
+<div class="container mt-3" style="max-width: 600px;">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3>🛒 Nueva Venta</h3>
+        <a href="/dashboard/@UsuarioId" class="btn btn-outline-secondary btn-sm">Volver</a>
+    </div>
+
+    <!-- Feedback Alerts -->
+    @if (!string.IsNullOrEmpty(ErrorMessage))
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @ErrorMessage
+            <button type="button" class="btn-close" @onclick="() => ErrorMessage = null"></button>
+        </div>
+    }
+    @if (!string.IsNullOrEmpty(SuccessMessage))
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @SuccessMessage
+            <button type="button" class="btn-close" @onclick="() => SuccessMessage = null"></button>
+        </div>
+    }
+
+    <!-- Buscador / Escáner -->
+    <div class="card shadow-sm mb-3">
+        <div class="card-body p-2">
+            <div class="input-group input-group-lg">
+                <span class="input-group-text bg-light">🔍</span>
+                <input type="text" 
+                       class="form-control" 
+                       placeholder="Escanear o buscar producto..." 
+                       @bind="SearchTerm" 
+                       @bind:event="oninput"
+                       @onkeyup="HandleSearch" />
+                <button class="btn btn-primary" @onclick="BuscarYAgregar">Agregar</button>
+            </div>
+             <small class="text-muted ms-1">Presiona Enter para agregar rápido.</small>
+        </div>
+    </div>
+
+    <!-- Lista de Resultados (Autocomplete visual) - Opcional, por ahora oculto si no se busca -->
+    @if (!string.IsNullOrWhiteSpace(SearchTerm) && SearchTerm.Length > 2)
+    {
+        <div class="list-group mb-3 shadow position-absolute w-100" style="z-index: 1000; max-width: 580px;">
+            @foreach (var prod in AllProducts.Where(p => p.Nombre.Contains(SearchTerm, StringComparison.OrdinalIgnoreCase)).Take(5))
+            {
+                 <button type="button" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                         @onclick="() => AgregarAlCarrito(prod)">
+                     <span>@prod.Nombre</span>
+                     <span class="badge bg-secondary rounded-pill">@prod.PrecioVenta.ToString("C0")</span>
+                 </button>
+            }
+        </div>
+    }
+
+    <!-- Carrito de Compras -->
+    @if (Carrito.Any())
+    {
+        <div class="card mb-5 border-0 bg-transparent">
+            <div class="list-group shadow-sm">
+                @foreach (var item in Carrito)
+                {
+                    <div class="list-group-item d-flex justify-content-between align-items-center p-3">
+                        <div class="flex-grow-1">
+                            <h6 class="mb-0">@item.Nombre</h6>
+                            <small class="text-muted">@item.Precio.ToString("C0") x unidad</small>
+                        </div>
+                        
+                        <div class="d-flex align-items-center">
+                            <button class="btn btn-outline-danger btn-sm rounded-circle me-2" style="width: 32px; height: 32px;" 
+                                    @onclick="() => DisminuirCantidad(item)">-</button>
+                            
+                            <span class="fw-bold mx-2" style="min-width: 25px; text-align: center;">@item.Cantidad</span>
+                            
+                            <button class="btn btn-outline-success btn-sm rounded-circle ms-2 me-3" style="width: 32px; height: 32px;"
+                                    @onclick="() => AumentarCantidad(item)">+</button>
+                            
+                            <span class="fw-bold text-end" style="min-width: 70px;">@item.Subtotal.ToString("C0")</span>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="text-center text-muted py-5">
+            <h1>🛍️</h1>
+            <p>El carrito está vacío.</p>
+        </div>
+    }
+
+    <!-- Footer Fijo: Totales y Botón Cobrar -->
+    <div class="fixed-bottom bg-white shadow p-3 border-top">
+        <div class="container" style="max-width: 600px;">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="h5 mb-0 text-muted">Total:</span>
+                <span class="h2 mb-0 fw-bold text-primary">@TotalVenta.ToString("C2")</span>
+            </div>
+            <button class="btn btn-success w-100 btn-lg fw-bold shadow" 
+                    @onclick="ProcesarVenta" 
+                    disabled="@(!Carrito.Any() || IsLoading)">
+                @if (IsLoading)
+                {
+                    <span class="spinner-border spinner-border-sm me-2"></span>
+                    <span>Procesando...</span>
+                }
+                else
+                {
+                    <span>✅ COBRAR (@Carrito.Sum(x => x.Cantidad) items)</span>
+                }
+            </button>
+        </div>
+    </div>
+    
+    <!-- Espaciador para que el footer no tape el contenido -->
+    <div style="height: 120px;"></div>
+</div>
