@@ -1,0 +1,88 @@
+@page "/product/new/{UsuarioId:int}"
+@page "/product/edit/{Id:int}/{UsuarioId:int}"
+@rendermode InteractiveServer
+
+<PageTitle>@Title</PageTitle>
+
+<div class="container mt-3" style="max-width: 600px;">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">@Title</h4>
+        </div>
+        <div class="card-body">
+            @if (!string.IsNullOrEmpty(ErrorMessage))
+            {
+                <div class="alert alert-danger alert-dismissible fade show">
+                    @ErrorMessage
+                    <button type="button" class="btn-close" @onclick="() => ErrorMessage = null"></button>
+                </div>
+            }
+
+            @if (IsLoading)
+            {
+                 <div class="text-center py-4">
+                    <div class="spinner-border" role="status"></div>
+                </div>
+            }
+            else
+            {
+                <form @onsubmit="HandleSave">
+                    <!-- Codigo -->
+                    <div class="mb-3">
+                        <label class="form-label">Código</label>
+                        <input type="text" class="form-control" @bind="Model.Codigo" placeholder="Scanner o Manual" />
+                    </div>
+
+                    <!-- Nombre -->
+                    <div class="mb-3">
+                        <label class="form-label">Nombre *</label>
+                        <input type="text" class="form-control" @bind="Model.Nombre" required />
+                    </div>
+
+                    <!-- Categoria -->
+                    <div class="mb-3">
+                         <label class="form-label">Categoría *</label>
+                         <select class="form-select" @bind="Model.CategoriaId">
+                             @foreach(var cat in Categorias)
+                             {
+                                 <option value="@cat.CategoriaId">@cat.NombreCategoria</option>
+                             }
+                         </select>
+                    </div>
+
+                    <div class="row">
+                        <!-- Precio Compra -->
+                        <div class="col-6 mb-3">
+                            <label class="form-label">Costo</label>
+                            <input type="number" step="0.01" class="form-control" @bind="Model.PrecioCompra" />
+                        </div>
+                        <!-- Precio Venta -->
+                        <div class="col-6 mb-3">
+                            <label class="form-label">VENTA *</label>
+                            <input type="number" step="0.01" class="form-control fw-bold border-success" @bind="Model.PrecioVenta" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- Stock Actual -->
+                        <div class="col-6 mb-3">
+                            <label class="form-label">Stock Actual</label>
+                            <input type="number" class="form-control" @bind="Model.StockActual" />
+                        </div>
+                        <!-- Stock Minimo -->
+                        <div class="col-6 mb-3">
+                            <label class="form-label">Mínimo</label>
+                            <input type="number" class="form-control" @bind="Model.StockMinimo" />
+                        </div>
+                    </div>
+
+                    <!-- Botones -->
+                    <div class="d-flex justify-content-between mt-4">
+                        <button type="button" class="btn btn-secondary" @onclick="Cancel">Cancelar</button>
+                        <button type="button" class="btn btn-primary px-4" @onclick="HandleSave">💾 Guardar</button>
+                    </div>
+                </form>
+            }
+        </div>
+    </div>
+</div>
