@@ -33,9 +33,17 @@ app.MapRazorComponents<App>()
 
 
 // Inicializar la cadena de conexión estática para los Repositorios Legacy
-// Inicializar la cadena de conexión estática para los Repositorios Legacy
-// Inicializar la cadena de conexión estática para los Repositorios Legacy
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+// CRITICO PARA RENDER:
+// Intentar leer la variable de entorno "DefaultConnection" directamente.
+// Esto es necesario porque en Render definimos la variable como raíz, no bajo "ConnectionStrings__".
+var envConnectionString = Environment.GetEnvironmentVariable("DefaultConnection");
+if (!string.IsNullOrEmpty(envConnectionString))
+{
+    connectionString = envConnectionString;
+}
+
 if (!string.IsNullOrEmpty(connectionString))
 {
     PulperiaSystem.DataAccess.SqlHelper.ConnectionString = connectionString;
