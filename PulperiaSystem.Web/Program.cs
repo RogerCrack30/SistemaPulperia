@@ -19,6 +19,13 @@ if (!app.Environment.IsDevelopment())
 app.UseStatusCodePagesWithReExecute("/not-found");
 app.UseHttpsRedirection();
 
+// IMPORTANT: Forwarded Headers for Render/Linux Proxy compatibility
+// This ensures Blazor/SignalR knows it's running on HTTPS even behind a proxy
+app.UseForwardedHeaders(new ForwardedHeadersOptions
+{
+    ForwardedHeaders = Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedFor | Microsoft.AspNetCore.HttpOverrides.ForwardedHeaders.XForwardedProto
+});
+
 app.UseStaticFiles();
 app.UseAntiforgery();
 app.MapRazorComponents<App>()
