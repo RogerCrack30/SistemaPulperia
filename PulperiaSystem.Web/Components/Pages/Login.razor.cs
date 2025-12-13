@@ -14,11 +14,24 @@ namespace PulperiaSystem.Web.Components.Pages
         protected string Password { get; set; }
         protected string ErrorMessage { get; set; }
 
-        protected void HandleLogin()
+
+        protected bool IsLoading { get; set; } = false;
+
+        protected async Task HandleLogin()
         {
+            if (IsLoading) return;
+            IsLoading = true;
+            ErrorMessage = "";
+            StateHasChanged();
+
+            // Give UI a moment to update
+            await Task.Yield();
+
             try
             {
-                var user = _repo.Login(Username, Password);
+                // Run sync repo in background thread to avoid blocking UI
+                var user = await Task.Run(() => _repo.Login(Username, Password));
+
                 if (user != null)
                 {
                     // En una app real usaríamos AuthenticationStateProvider
@@ -30,9 +43,14 @@ namespace PulperiaSystem.Web.Components.Pages
                     ErrorMessage = "Credenciales incorrectas.";
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                ErrorMessage = "Error de conexión con la base de datos.";
+                Console.WriteLine($"Login Error: {ex}");
+                ErrorMessage = $"Error: {ex.Message}";
+            }
+            finally
+            {
+                IsLoading = false;
             }
         }
     }

@@ -22,8 +22,16 @@
                 <input type="password" class="form-control" @bind="Password" placeholder="******" />
             </div>
 
-            <button class="btn btn-primary w-100" @onclick="HandleLogin">
-                Ingresar
+            <button class="btn btn-primary w-100" @onclick="HandleLogin" disabled="@IsLoading">
+                @if (IsLoading)
+                {
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <span> Conectando...</span>
+                }
+                else
+                {
+                    <span>Ingresar</span>
+                }
             </button>
         </div>
     </div>
