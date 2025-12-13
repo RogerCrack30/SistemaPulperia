@@ -1,0 +1,69 @@
+@page "/inventory/{UsuarioId:int}"
+@rendermode InteractiveServer
+
+<PageTitle>Inventario</PageTitle>
+
+<div class="container mt-3" style="max-width: 800px;">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3>📋 Inventario</h3>
+        <div>
+             <a href="/dashboard/@UsuarioId" class="btn btn-outline-secondary btn-sm me-2">Volver</a>
+             <button class="btn btn-success btn-sm" @onclick="GoToCreate">➕ Nuevo</button>
+        </div>
+    </div>
+    
+    @if (!string.IsNullOrEmpty(ErrorMessage))
+    {
+        <div class="alert alert-danger">@ErrorMessage</div>
+    }
+
+    <!-- Search -->
+    <div class="mb-3">
+        <input type="text" class="form-control" placeholder="Buscar por Nombre o Código..." 
+               @bind="SearchTerm" @oninput="HandleSearch" />
+    </div>
+
+    @if (IsLoading)
+    {
+         <div class="text-center py-5">
+            <div class="spinner-border text-primary" role="status"></div>
+            <p>Cargando productos...</p>
+        </div>
+    }
+    else if (!FilteredProducts.Any())
+    {
+        <div class="text-center py-5 text-muted">
+            <h4>📦</h4>
+            <p>No se encontraron productos.</p>
+            @if(string.IsNullOrEmpty(SearchTerm))
+            {
+                <button class="btn btn-primary" @onclick="GoToCreate">Crear el Primer Producto</button>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="list-group shadow-sm">
+            @foreach(var prod in FilteredProducts)
+            {
+                <button class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                        @onclick="() => GoToEdit(prod.ProductoId)">
+                    <div>
+                        <div class="fw-bold">@prod.Nombre</div>
+                        <small class="text-muted">Código: @(prod.Codigo ?? "N/A")</small>
+                    </div>
+                    <div class="text-end">
+                        <div class="fw-bold @(prod.StockActual <= prod.StockMinimo ? "text-danger" : "text-success")">
+                            Stock: @prod.StockActual
+                        </div>
+                        <small>@prod.PrecioVenta.ToString("C0")</small>
+                    </div>
+                </button>
+            }
+        </div>
+        <div class="text-center mt-2 text-muted">
+            <small>Mostrando @FilteredProducts.Count productos</small>
+        </div>
+    }
+</div>
