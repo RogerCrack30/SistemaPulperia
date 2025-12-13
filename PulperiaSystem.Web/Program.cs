@@ -34,19 +34,11 @@ app.MapRazorComponents<App>()
 
 // Inicializar la cadena de conexión estática para los Repositorios Legacy
 // Inicializar la cadena de conexión estática para los Repositorios Legacy
+// Inicializar la cadena de conexión estática para los Repositorios Legacy
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 if (!string.IsNullOrEmpty(connectionString))
 {
-    // LOGGING DE DEPURACIÓN (Sanitized)
-    // Esto nos mostrará en los logs de Render EXÁCTAMENTE qué está leyendo (sin mostrar la clave real)
-    var debugString = System.Text.RegularExpressions.Regex.Replace(connectionString, "Password=.*?;", "Password=HIDDEN;");
-    Console.WriteLine($"[DIAGNOSTIC] Loaded Connection String: '{debugString}'");
-
     PulperiaSystem.DataAccess.SqlHelper.ConnectionString = connectionString;
-}
-else
-{
-    Console.WriteLine("[DIAGNOSTIC] CRITICAL: Connection String 'DefaultConnection' is MISSING or EMPTY.");
 }
 
 app.Run();
